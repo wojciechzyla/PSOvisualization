@@ -12,6 +12,8 @@ public class PSO {
   private ArrayList<Particle> particles = new ArrayList<Particle>();
   private double windowHeight;
   private double windowWidth;
+  private double maxSpeed;
+  private int population;
 
   PSO(){};
 
@@ -23,6 +25,23 @@ public class PSO {
       firstInstance.socialEsteem = 1;
     }
     return firstInstance;
+  }
+
+  public void setPopulation(int population) {
+    if (population < 10) population = 10;
+    this.population = population;
+  }
+
+  public int getPopulation() {
+    return population;
+  }
+
+  public void setMaxSpeed(double maxSpeed) {
+    this.maxSpeed = Math.abs(maxSpeed);;
+  }
+
+  public double getMaxSpeed() {
+    return maxSpeed;
   }
 
   public void setWindowHeight(double windowHeight) {
@@ -68,22 +87,21 @@ public class PSO {
     return target;
   }
 
-  public void deleteTarget(Integer id) {
+  public void resetTarget() {
     target = null;
   }
 
-  public void createSwarm(Integer n, Double maxSpeed, Double minSpeed){
-    if (n < 5) n = 5;
+  public void createSwarm(){
     Random random = new Random();
     double x;
     double y;
     double vx;
     double vy;
-    for (int i=0; i<n; i++) {
+    for (int i=0; i<population; i++) {
       x = windowWidth * random.nextDouble();
       y = windowHeight * random.nextDouble();
-      vx = minSpeed + (maxSpeed - minSpeed) * random.nextDouble();
-      vy = minSpeed + (maxSpeed - minSpeed) * random.nextDouble();
+      vx = -maxSpeed + 2 * maxSpeed * random.nextDouble();
+      vy = -maxSpeed + 2 * maxSpeed * random.nextDouble();
       Particle part = new Particle(x, y, vx, vy);
       particles.add(part);
     }
@@ -149,9 +167,13 @@ public class PSO {
         // Calculate new velocity in 'x' direction
         newXV = inertiaCoefficient * velocity.get(0) + selfEsteem * r1 * (bestPosition.get(0) - position.get(0))+
             socialEsteem * r2 * (bestPosition2.get(0) - position.get(0));
+        if (newXV > maxSpeed) newXV = maxSpeed;
+        if (newXV < -maxSpeed) newXV = -maxSpeed;
         // Calculate new velocity in 'y' direction
         newYV = inertiaCoefficient * velocity.get(1) + selfEsteem * r1 * (bestPosition.get(1) - position.get(1))+
             socialEsteem * r2 * (bestPosition2.get(1) - position.get(1));
+        if (newYV > maxSpeed) newYV = maxSpeed;
+        if (newYV < -maxSpeed) newYV = -maxSpeed;
         part.setVelocity(newXV, newYV);
 
         // Calculate new 'x' coordinate

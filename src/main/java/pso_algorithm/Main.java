@@ -24,12 +24,14 @@ public class Main {
     p.setSelfEsteem(0.6);
     p.setSocialEsteem(0.3);
     p.setInertiaCoefficient(0.3);
+    p.setMaxSpeed(10.0);
+    p.setPopulation(60);
     double winHeight = 100;
     double winWidth = 100;
     p.setWindowHeight(winHeight);
     p.setWindowWidth(winWidth);
     p.setTarget(10.0,90.0);
-    p.createSwarm(60,  10.0, 1.0);
+    p.createSwarm();
     ArrayList<Particle> particles;
     particles = p.getSwarm();
     for (int i = 0; i<1000; i++){
