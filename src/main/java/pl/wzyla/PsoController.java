@@ -1,6 +1,5 @@
 package pl.wzyla;
 
-import java.util.ArrayList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -38,6 +37,8 @@ public class PsoController {
   private Button startButton;
   @FXML
   private AnchorPane animationField;
+  @FXML
+  private Button spreadButton;
 
   private final Circle targetCircle = new Circle(20);
   private final PSO psoAlgorithm = PSO.getInstance();
@@ -74,16 +75,15 @@ public class PsoController {
         startButton.setDisable(true);
         maxSpeedText.setDisable(true);
         resetButton.setDisable(false);
+        spreadButton.setDisable(false);
         psoAlgorithm.setPopulation(numSwarmSlider.valueProperty().getValue().intValue());
         psoAlgorithm.setSelfEsteem(c1Slider.valueProperty().getValue().floatValue());
         psoAlgorithm.setSocialEsteem(c2Slider.valueProperty().getValue().floatValue());
         psoAlgorithm.setInertiaCoefficient(wSlider.valueProperty().getValue().floatValue());
-        psoAlgorithm.setMaxSpeed(Double.parseDouble(wLabel.textProperty().get()));
+        psoAlgorithm.setMaxSpeed(Double.parseDouble(maxSpeedText.getText()));
         psoAlgorithm.setWindowHeight(animationField.getHeight());
         psoAlgorithm.setWindowWidth(animationField.getWidth());
-
-        simulation.run();
-        simulation.initial(psoAlgorithm, animationField);
+        simulation.engage(psoAlgorithm, animationField);
     });
 
     resetButton.addEventHandler(ActionEvent.ACTION, e -> {
@@ -94,21 +94,27 @@ public class PsoController {
       startButton.setDisable(false);
       maxSpeedText.setDisable(false);
       resetButton.setDisable(true);
+      spreadButton.setDisable(true);
       animationField.getChildren().clear();
-      psoAlgorithm.resetSwarm();
-      psoAlgorithm.resetTarget();
-
       simulation.stop();
+    });
+
+    spreadButton.addEventHandler(ActionEvent.ACTION, e ->{
+      simulation.spread();
     });
 
     animationField.addEventHandler(MouseEvent.MOUSE_CLICKED, e ->{
       if (simulation.isRunning()){
         targetCircle.setFill(Color.RED);
+        targetCircle.setViewOrder(2);
         targetCircle.setLayoutY(e.getY());
         targetCircle.setLayoutX(e.getX());
         if (!animationField.getChildren().contains(targetCircle)){
           animationField.getChildren().add(targetCircle);
+          simulation.changeTarget(e.getX(), e.getY());
+          simulation.run();
         }
+        simulation.changeTarget(e.getX(), e.getY());
       }
     });
   }

@@ -80,6 +80,12 @@ public class PSO {
   }
 
   public void setTarget(Double x, Double y) {
+    Particle part;
+    for (int i = 0; i<particles.size(); i++){
+      part = particles.get(i);
+      part.resetBestPosition();
+      particles.set(i, part);
+    }
     target = new TargetPoint(x, y);
   }
 
@@ -109,6 +115,14 @@ public class PSO {
 
   public void resetSwarm(){
     particles.clear();
+  }
+
+  public void setSwarm(ArrayList<Particle> swarm){
+    this.particles = swarm;
+  }
+
+  public void setSwarm(int i, Particle part){
+    this.particles.set(i, part);
   }
 
   public ArrayList<Particle> getSwarm(){

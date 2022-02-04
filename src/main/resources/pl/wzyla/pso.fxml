@@ -9,12 +9,11 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-
 <BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.wzyla.PsoController">
    <left>
       <Pane fx:id="menuControl" prefHeight="900.0" prefWidth="190.0" style="-fx-background-color: #b0994c#b0994c;" BorderPane.alignment="CENTER">
          <children>
-            <Slider fx:id="numSwarmSlider" layoutX="14.0" layoutY="90.0" max="150.0" min="10.0" showTickMarks="true" snapToTicks="true" value="10.0" />
+            <Slider fx:id="numSwarmSlider" blockIncrement="1.0" layoutX="14.0" layoutY="90.0" max="150.0" min="10.0" showTickMarks="true" snapToTicks="true" value="10.0" />
             <Label fx:id="numSwarmLabel" layoutX="107.0" layoutY="65.0" text="10" />
             <Label layoutX="14.0" layoutY="65.0" text="Population size" />
             <Slider fx:id="c1Slider" blockIncrement="1.0" layoutX="14.0" layoutY="143.0" max="3.0" showTickMarks="true" value="0.3" />
@@ -30,6 +29,7 @@
             <TextField fx:id="maxSpeedText" layoutX="13.0" layoutY="324.0" prefHeight="26.0" prefWidth="55.0" text="10" />
             <Button fx:id="resetButton" disable="true" layoutX="16.0" layoutY="424.0" mnemonicParsing="false" text="Reset simulation" />
             <Button fx:id="startButton" layoutX="17.0" layoutY="387.0" mnemonicParsing="false" text="Start simulation" />
+            <Button fx:id="spreadButton" disable="true" layoutX="16.0" layoutY="464.0" mnemonicParsing="false" text="Spread" />
          </children>
       </Pane>
    </left>

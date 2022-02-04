@@ -50,5 +50,10 @@ public class Particle extends Point{
   public double getBestCost() {
     return bestCost;
   }
+
+  public void resetBestPosition(){
+    bestCost = Double.MAX_VALUE;
+    bestCoordinate = coordinate;
+  }
 }
 
