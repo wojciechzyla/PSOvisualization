@@ -24,7 +24,7 @@
             <Slider fx:id="c2Slider" blockIncrement="1.0" layoutX="14.0" layoutY="205.0" max="3.0" showTickMarks="true" value="0.3" />
             <Label layoutX="18.0" layoutY="244.0" text="w" />
             <Label fx:id="wLabel" layoutX="40.0" layoutY="244.0" text="Label" />
-            <Slider fx:id="wSlider" blockIncrement="1.0" layoutX="14.0" layoutY="267.0" max="3.0" showTickMarks="true" value="0.3" />
+            <Slider fx:id="wSlider" blockIncrement="1.0" layoutX="14.0" layoutY="267.0" max="10.0" showTickMarks="true" value="0.3" />
             <Label layoutX="12.0" layoutY="307.0" text="Max absolute Particle Speed" />
             <TextField fx:id="maxSpeedText" layoutX="13.0" layoutY="324.0" prefHeight="26.0" prefWidth="55.0" text="10" />
             <Button fx:id="resetButton" disable="true" layoutX="16.0" layoutY="424.0" mnemonicParsing="false" text="Reset simulation" />
