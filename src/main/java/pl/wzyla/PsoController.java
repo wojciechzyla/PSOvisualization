@@ -130,11 +130,13 @@ public class PsoController {
 
   @FXML
   public void goGithub(ActionEvent e) throws URISyntaxException, IOException {
+    githubLink.setVisited(false);
     Desktop.getDesktop().browse(new URI("https://github.com/wojciechzyla/PSOvisualization"));
   }
 
   @FXML
   public void goLinkedin(ActionEvent e) throws URISyntaxException, IOException {
+    linkedinLink.setVisited(false);
     Desktop.getDesktop().browse(new URI("https://www.linkedin.com/in/wojciech-zyla/"));
   }
 }
