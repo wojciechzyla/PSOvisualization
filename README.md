@@ -21,4 +21,8 @@ After staring simulation particles are randomly distributed and stationary. To m
 
 ### Minimum found
 
-![Alt text](/screens/minFound.png?raw=true "Initialization")
+![Alt text](/screens/minFound.png?raw=true "Minimum found")
+
+### Change minimum
+
+![Alt text](/screens/changeMin.png?raw=true "Change minimum")
