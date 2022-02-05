@@ -15,14 +15,14 @@ In this view you can change following parameters of the algorithm:
 
 ### Initialization
 
-![Alt text](/screens/init.png?raw=true "Initialization")
+![Initialization](/screens/init.png)
 
 After staring simulation particles are randomly distributed and stationary. To make particles search for minimum, click somewhere on the white space.
 
 ### Minimum found
 
-![Alt text](/screens/minFound.png?raw=true "Minimum found")
+![Minimum found](/screens/minFound.png)
 
 ### Change minimum
 
-![Alt text](/screens/changeMin.png?raw=true "Change minimum")
+![Change minimum](/screens/changeMin.png)
