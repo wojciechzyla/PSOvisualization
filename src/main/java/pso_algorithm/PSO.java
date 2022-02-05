@@ -9,11 +9,11 @@ public class PSO {
   private double inertiaCoefficient;
   private double selfEsteem;
   private double socialEsteem;
-  private ArrayList<Particle> particles = new ArrayList<Particle>();
+  private ArrayList<Particle> swarm = new ArrayList<Particle>();
   private double windowHeight;
   private double windowWidth;
   private double maxSpeed;
-  private int population;
+  private int swarmCount;
 
   PSO(){};
 
@@ -27,13 +27,13 @@ public class PSO {
     return firstInstance;
   }
 
-  public void setPopulation(int population) {
-    if (population < 10) population = 10;
-    this.population = population;
+  public void setSwarmCount(int swarmCount) {
+    if (swarmCount < 10) swarmCount = 10;
+    this.swarmCount = swarmCount;
   }
 
-  public int getPopulation() {
-    return population;
+  public int getSwarmCount() {
+    return swarmCount;
   }
 
   public void setMaxSpeed(double maxSpeed) {
@@ -81,10 +81,10 @@ public class PSO {
 
   public void setTarget(Double x, Double y) {
     Particle part;
-    for (int i = 0; i<particles.size(); i++){
-      part = particles.get(i);
+    for (int i = 0; i< swarm.size(); i++){
+      part = swarm.get(i);
       part.resetBestPosition();
-      particles.set(i, part);
+      swarm.set(i, part);
     }
     target = new TargetPoint(x, y);
   }
@@ -103,30 +103,48 @@ public class PSO {
     double y;
     double vx;
     double vy;
-    for (int i=0; i<population; i++) {
+    for (int i=0; i< swarmCount; i++) {
       x = windowWidth * random.nextDouble();
       y = windowHeight * random.nextDouble();
       vx = -maxSpeed + 2 * maxSpeed * random.nextDouble();
       vy = -maxSpeed + 2 * maxSpeed * random.nextDouble();
       Particle part = new Particle(x, y, vx, vy);
-      particles.add(part);
+      swarm.add(part);
     }
   }
 
   public void resetSwarm(){
-    particles.clear();
+    swarm.clear();
   }
 
   public void setSwarm(ArrayList<Particle> swarm){
-    this.particles = swarm;
+    this.swarm = swarm;
   }
 
   public void setSwarm(int i, Particle part){
-    this.particles.set(i, part);
+    this.swarm.set(i, part);
   }
 
   public ArrayList<Particle> getSwarm(){
-    return particles;
+    return swarm;
+  }
+
+  public void spreadSwarm() {
+    double vx, vy, x, y;
+    Particle part;
+    int[][] variation = {{-1,-1},{-1,1},{1,1},{1,-1}};
+    int j;
+    for (int i=0; i< swarmCount; i++) {
+      j = i%3;
+      part = swarm.get(i);
+      vx = variation[j][0] * maxSpeed * 10;
+      vy = variation[j][1] * maxSpeed * 10;
+      x = part.getCoordinate().get(0)+vx;
+      y = part.getCoordinate().get(1)+vy;
+      part.setCoordinate(x, y);
+      part.setVelocity(vx, vy);
+      swarm.set(i, part);
+    }
   }
 
   private double objectiveFunction(Particle particle) {
@@ -140,31 +158,31 @@ public class PSO {
   }
 
   public void algorithmStep(){
-    if (target != null && !particles.isEmpty()){
+    if (target != null && !swarm.isEmpty()){
       // Execute algorithm step only if swarm and target exist
       Random random = new Random();
       ArrayList<Particle> helperSwarm = new ArrayList<Particle>();
 
       Particle part;
-      if (particles.get(0).getCost() == Double.MAX_VALUE){
+      if (swarm.get(0).getCost() == Double.MAX_VALUE){
         // First step after swarm reset
-        for (int i=0; i<particles.size(); i++){
-          part = particles.get(i);
+        for (int i=0; i< swarm.size(); i++){
+          part = swarm.get(i);
           part.setCost(objectiveFunction(part));
-          particles.set(i, part);
+          swarm.set(i, part);
         }
       }
 
       double functionVal;
       Particle randPart;
 
-      for (int i=0; i<particles.size(); i++){
-        part = particles.get(i);
-        int randomParticle = random.nextInt(particles.size());
+      for (int i=0; i< swarm.size(); i++){
+        part = swarm.get(i);
+        int randomParticle = random.nextInt(swarm.size());
         while (randomParticle == i ){
-          randomParticle = random.nextInt(particles.size());
+          randomParticle = random.nextInt(swarm.size());
         }
-        randPart = particles.get(randomParticle);
+        randPart = swarm.get(randomParticle);
         double newXV;
         double newYV;
         double newX;
@@ -215,7 +233,7 @@ public class PSO {
         }
         helperSwarm.add(part);
       }
-      particles = helperSwarm;
+      swarm = helperSwarm;
     }
   }
 }

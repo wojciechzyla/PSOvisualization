@@ -1,8 +1,13 @@
 package pl.wzyla;
 
+import java.awt.Desktop;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
@@ -39,6 +44,10 @@ public class PsoController {
   private AnchorPane animationField;
   @FXML
   private Button spreadButton;
+  @FXML
+  private Hyperlink githubLink;
+  @FXML
+  private Hyperlink linkedinLink;
 
   private final Circle targetCircle = new Circle(20);
   private final PSO psoAlgorithm = PSO.getInstance();
@@ -76,7 +85,7 @@ public class PsoController {
         maxSpeedText.setDisable(true);
         resetButton.setDisable(false);
         spreadButton.setDisable(false);
-        psoAlgorithm.setPopulation(numSwarmSlider.valueProperty().getValue().intValue());
+        psoAlgorithm.setSwarmCount(numSwarmSlider.valueProperty().getValue().intValue());
         psoAlgorithm.setSelfEsteem(c1Slider.valueProperty().getValue().floatValue());
         psoAlgorithm.setSocialEsteem(c2Slider.valueProperty().getValue().floatValue());
         psoAlgorithm.setInertiaCoefficient(wSlider.valueProperty().getValue().floatValue());
@@ -117,5 +126,15 @@ public class PsoController {
         simulation.changeTarget(e.getX(), e.getY());
       }
     });
+  }
+
+  @FXML
+  public void goGithub(ActionEvent e) throws URISyntaxException, IOException {
+    Desktop.getDesktop().browse(new URI("https://github.com/wojciechzyla/PSOvisualization"));
+  }
+
+  @FXML
+  public void goLinkedin(ActionEvent e) throws URISyntaxException, IOException {
+    Desktop.getDesktop().browse(new URI("https://www.linkedin.com/in/wojciech-zyla/"));
   }
 }

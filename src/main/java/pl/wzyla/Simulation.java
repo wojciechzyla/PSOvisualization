@@ -1,10 +1,8 @@
 package pl.wzyla;
 
 import java.util.ArrayList;
-import java.util.Random;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.animation.TranslateTransition;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.scene.Node;
@@ -22,9 +20,15 @@ public class Simulation {
   AnchorPane animationField;
 
   Simulation(){
-    this.timeline = new Timeline(new KeyFrame(Duration.millis(10), this::simulationStep));
+    this.timeline = new Timeline(new KeyFrame(Duration.millis(20), this::simulationStep));
     this.timeline.setCycleCount(Timeline.INDEFINITE);
-    //this.timeline.setCycleCount(200);
+  }
+
+  public static Simulation getInstance(){
+    if (firstInstance == null){
+      firstInstance = new Simulation();
+    }
+    return firstInstance;
   }
 
   private void simulationStep(ActionEvent e) {
@@ -38,13 +42,6 @@ public class Simulation {
       particle.setLayoutY(particles.get(i).getCoordinate().get(1));
       animationField.getChildren().set(i, particle);
     }
-  }
-
-  public static Simulation getInstance(){
-    if (firstInstance == null){
-      firstInstance = new Simulation();
-    }
-    return firstInstance;
   }
 
   public void engage(PSO pso, AnchorPane animationField){
@@ -64,19 +61,7 @@ public class Simulation {
   }
 
   public void spread(){
-    Random random = new Random();
-    Particle particle;
-    double vx, vy, x, y, speed;
-    speed = Math.pow(pso.getMaxSpeed(), 3);
-    for (int i = 0; i<pso.getSwarm().size(); i++){
-      particle = pso.getSwarm().get(i);
-      vx = -speed + 2 * speed * random.nextDouble();
-      vy = -speed + 2 * speed * random.nextDouble();
-      x = particle.getCoordinate().get(0)+vx;
-      y = particle.getCoordinate().get(1)+vy;
-      particle.setCoordinate(x, y);
-      pso.setSwarm(i, particle);
-    }
+    pso.spreadSwarm();
   }
 
   public void run(){
