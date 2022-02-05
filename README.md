@@ -4,7 +4,7 @@ Main goal of this project was to better understand Particle Swarm Optimization a
 
 ### Settings
 
-![Alt text](/screens/settings.png?raw=true "Settings")
+![Settings](/screens/settings.png)
 
 In this view you can change following parameters of the algorithm:
 - ```Population size``` number of particles
